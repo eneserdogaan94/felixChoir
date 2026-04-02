@@ -1,5 +1,25 @@
 import { motion } from 'framer-motion'
-import logoMain from '../assets/logolar/logo-main.png'
+import logoMain   from '../assets/logolar/logo-main.png'
+import logoKoro   from '../assets/logolar/logo-koro.png'
+import logoKadin  from '../assets/logolar/logo-kadin.png'
+import logoPop    from '../assets/logolar/logo-pop.png'
+import logoYildiz from '../assets/logolar/logo-yildiz.png'
+import logoCocuk  from '../assets/logolar/logo-cocuk.png'
+import logoMini   from '../assets/logolar/logo-mini.png'
+import logoOrk    from '../assets/logolar/logo-orkestra.png'
+import logoRitim  from '../assets/logolar/logo-koro.png'
+
+// 8 logo, 2 yörüngede 4'er tane — iç r:130, dış r:195
+const orbitLogos = [
+  { src: logoKoro,   size: 48, r: 130, startDeg: 0,   duration: 22, dir: 'cw'  },
+  { src: logoPop,    size: 44, r: 130, startDeg: 90,  duration: 22, dir: 'cw'  },
+  { src: logoCocuk,  size: 44, r: 130, startDeg: 180, duration: 22, dir: 'cw'  },
+  { src: logoMini,   size: 40, r: 130, startDeg: 270, duration: 22, dir: 'cw'  },
+  { src: logoKadin,  size: 46, r: 195, startDeg: 45,  duration: 34, dir: 'ccw' },
+  { src: logoYildiz, size: 44, r: 195, startDeg: 135, duration: 34, dir: 'ccw' },
+  { src: logoOrk,    size: 48, r: 195, startDeg: 225, duration: 34, dir: 'ccw' },
+  { src: logoRitim,  size: 42, r: 195, startDeg: 315, duration: 34, dir: 'ccw' },
+]
 
 const fadeUp = (delay) => ({
   initial: { opacity: 0, y: 30 },
@@ -75,6 +95,76 @@ export default function Hero() {
             </div>
           ))}
         </motion.div>
+      </div>
+
+      {/* Ses dalgası + etrafında dönen grup logoları — sadece desktop */}
+      <div
+        className="hidden lg:block absolute pointer-events-none"
+        style={{ width: 460, height: 460, left: '52%', top: '50%', transform: 'translate(-50%, -50%)' }}
+      >
+        <style>{`
+          @keyframes hero-cw  { from { transform: translate(-50%,-50%) rotate(0deg);   } to { transform: translate(-50%,-50%) rotate(360deg);  } }
+          @keyframes hero-ccw { from { transform: translate(-50%,-50%) rotate(0deg);   } to { transform: translate(-50%,-50%) rotate(-360deg); } }
+          @keyframes keep-cw  { from { transform: rotate(0deg);   } to { transform: rotate(-360deg);  } }
+          @keyframes keep-ccw { from { transform: rotate(0deg);   } to { transform: rotate(360deg);   } }
+        `}</style>
+
+        {/* İç yörünge çemberi */}
+        <div className="absolute rounded-full border border-felix/10"
+             style={{ width: 260, height: 260, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
+        {/* Dış yörünge çemberi */}
+        <div className="absolute rounded-full border border-felix/6"
+             style={{ width: 390, height: 390, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
+
+        {/* Dönen logolar */}
+        {orbitLogos.map((logo, i) => {
+          const isCw = logo.dir === 'cw'
+          const animDelay = `${-(logo.startDeg / 360) * logo.duration}s`
+          return (
+            <div
+              key={i}
+              style={{
+                position: 'absolute', top: '50%', left: '50%',
+                width: 0, height: 0,
+                animation: `${isCw ? 'hero-cw' : 'hero-ccw'} ${logo.duration}s linear infinite`,
+                animationDelay: animDelay,
+              }}
+            >
+              {/* Radius offset */}
+              <div style={{
+                position: 'absolute',
+                top: -logo.r - logo.size / 2,
+                left: -logo.size / 2,
+                width: logo.size,
+                height: logo.size,
+                animation: `${isCw ? 'keep-cw' : 'keep-ccw'} ${logo.duration}s linear infinite`,
+                animationDelay: animDelay,
+              }}>
+                <img src={logo.src} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0.8 }} />
+              </div>
+            </div>
+          )
+        })}
+
+        {/* Merkez: ses dalgası */}
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+          <svg width="100" height="160" viewBox="0 0 100 160" fill="none">
+            {[
+              { x: 8,  h: 32,  dur: '1.1s', delay: '0s'    },
+              { x: 22, h: 64,  dur: '1.4s', delay: '0.15s' },
+              { x: 36, h: 96,  dur: '1.0s', delay: '0.05s' },
+              { x: 50, h: 72,  dur: '1.3s', delay: '0.25s' },
+              { x: 64, h: 112, dur: '0.9s', delay: '0.1s'  },
+              { x: 78, h: 56,  dur: '1.5s', delay: '0.2s'  },
+              { x: 92, h: 40,  dur: '1.2s', delay: '0.3s'  },
+            ].map((bar, i) => (
+              <rect key={i} x={bar.x - 5} y={(160 - bar.h) / 2} width={9} height={bar.h} rx={4} fill="rgba(245,200,0,0.22)">
+                <animate attributeName="height" values={`${bar.h};${bar.h * 0.25};${bar.h}`} dur={bar.dur} begin={bar.delay} repeatCount="indefinite" />
+                <animate attributeName="y" values={`${(160 - bar.h) / 2};${(160 - bar.h * 0.25) / 2};${(160 - bar.h) / 2}`} dur={bar.dur} begin={bar.delay} repeatCount="indefinite" />
+              </rect>
+            ))}
+          </svg>
+        </div>
       </div>
 
       {/* Decorative rings */}
