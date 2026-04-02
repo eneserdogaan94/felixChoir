@@ -21,11 +21,6 @@ function scrollTo(id) {
 export default function Hero() {
   return (
     <section className="min-h-screen bg-ink relative overflow-hidden flex items-center">
-      {/* Decorative rings */}
-      <div className="absolute right-[-10%] top-[10%] w-[600px] h-[600px] rounded-full border border-felix/10 pointer-events-none" />
-      <div className="absolute right-[-5%] top-[18%] w-[450px] h-[450px] rounded-full border border-felix/8 pointer-events-none" style={{ animation: 'spin 30s linear infinite' }} />
-      <div className="absolute right-[2%] top-[26%] w-[300px] h-[300px] rounded-full border border-felix/12 pointer-events-none" style={{ animation: 'spin 20s linear infinite reverse' }} />
-
       <style>{`
         @keyframes spin {
           from { transform: rotate(0deg); }
@@ -81,6 +76,11 @@ export default function Hero() {
           ))}
         </motion.div>
       </div>
+
+      {/* Decorative rings */}
+      <div className="absolute right-[-10%] top-[10%] w-[600px] h-[600px] rounded-full border border-felix/10 pointer-events-none" />
+      <div className="absolute right-[-5%] top-[18%] w-[450px] h-[450px] rounded-full border border-felix/8 pointer-events-none" style={{ animation: 'spin 30s linear infinite' }} />
+      <div className="absolute right-[2%] top-[26%] w-[300px] h-[300px] rounded-full border border-felix/12 pointer-events-none" style={{ animation: 'spin 20s linear infinite reverse' }} />
 
       {/* Right logo */}
       <div className="hidden md:block absolute right-12 top-1/2 -translate-y-1/2 pointer-events-none">
