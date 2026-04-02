@@ -56,10 +56,6 @@ export default function Groups() {
         className="text-center max-w-2xl mx-auto"
       >
         <p className="text-xs text-felix tracking-[0.4em] uppercase font-semibold">KOROLARIMİZ</p>
-        <h2 className="font-display text-5xl md:text-6xl font-bold mt-3">Her Sese Bir Yuva</h2>
-        <p className="text-chalk/50 text-lg mt-4">
-          Çocuklardan yetişkinlere, klasikten pop&apos;a — her ses burada kendine yer buluyor.
-        </p>
       </motion.div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-16 max-w-7xl mx-auto">
