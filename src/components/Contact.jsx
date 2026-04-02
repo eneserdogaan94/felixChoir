@@ -74,7 +74,15 @@ export default function Contact() {
           </div>
 
           <div className="mt-8">
-            <p className="text-xs uppercase tracking-widest text-chalk/30 mb-4">Sosyal Medya</p>
+            <div className="flex items-center gap-2 mb-4">
+              {/* Instagram logo SVG */}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-felix">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+              <p className="text-xs uppercase tracking-widest text-chalk/50">Instagram'da Takip Edin</p>
+            </div>
             <div className="flex flex-wrap gap-2">
               {instagramHandles.map((handle) => (
                 <a
@@ -82,8 +90,13 @@ export default function Contact() {
                   href={`https://instagram.com/${handle.slice(1)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-chalk/5 hover:bg-felix/10 border border-chalk/10 hover:border-felix/30 text-xs text-chalk/50 hover:text-felix px-3 py-1.5 transition-all duration-300"
+                  className="flex items-center gap-1.5 bg-chalk/5 hover:bg-felix/10 border border-chalk/10 hover:border-felix/40 text-xs text-chalk/60 hover:text-felix px-3 py-2 transition-all duration-300 rounded-sm group"
                 >
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-50 group-hover:opacity-100 transition-opacity shrink-0">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                  </svg>
                   {handle}
                 </a>
               ))}

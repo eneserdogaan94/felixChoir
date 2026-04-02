@@ -9,15 +9,25 @@ const navLinks = [
 ]
 
 const instagramHandles = [
-  { handle: 'korofelix', label: 'KF' },
-  { handle: 'korofelixkadin', label: 'KD' },
-  { handle: 'korofelixpop', label: 'PP' },
-  { handle: 'korofelixyildiz', label: 'YL' },
-  { handle: 'korofelixcocuk', label: 'CK' },
-  { handle: 'felixminii', label: 'MN' },
-  { handle: 'felixorkestra', label: 'OR' },
-  { handle: 'felixritim', label: 'RT' },
+  { handle: 'korofelix', label: '@korofelix' },
+  { handle: 'korofelixkadin', label: '@korofelixkadin' },
+  { handle: 'korofelixpop', label: '@korofelixpop' },
+  { handle: 'korofelixyildiz', label: '@korofelixyildiz' },
+  { handle: 'korofelixcocuk', label: '@korofelixcocuk' },
+  { handle: 'felixminii', label: '@felixminii' },
+  { handle: 'felixorkestra', label: '@felixorkestra' },
+  { handle: 'felixritim', label: '@felixritim' },
 ]
+
+function InstagramIcon({ size = 12 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+    </svg>
+  )
+}
 
 function scrollTo(id) {
   const el = document.getElementById(id)
@@ -56,17 +66,19 @@ export default function Footer() {
           <p className="text-sm text-chalk/40">+90 (533) 315 17 79</p>
           <p className="text-sm text-chalk/40 mt-1">Yenimahalle / Ankara</p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-col gap-2">
             {instagramHandles.map(({ handle, label }) => (
               <a
                 key={handle}
                 href={`https://instagram.com/${handle}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                title={`@${handle}`}
-                className="w-8 h-8 rounded-full border border-chalk/10 hover:border-felix flex items-center justify-center text-chalk/30 hover:text-felix text-xs transition-all duration-300"
+                className="flex items-center gap-2 text-chalk/35 hover:text-felix transition-colors duration-300 group w-fit"
               >
-                {label}
+                <span className="opacity-60 group-hover:opacity-100 transition-opacity">
+                  <InstagramIcon size={11} />
+                </span>
+                <span className="text-xs">{label}</span>
               </a>
             ))}
           </div>
