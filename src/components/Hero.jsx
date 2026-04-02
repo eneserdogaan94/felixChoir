@@ -103,11 +103,40 @@ export default function Hero() {
         style={{ width: 460, height: 460, left: '52%', top: '50%', transform: 'translate(-50%, -50%)' }}
       >
         <style>{`
-          @keyframes hero-cw  { from { transform: translate(-50%,-50%) rotate(0deg);   } to { transform: translate(-50%,-50%) rotate(360deg);  } }
-          @keyframes hero-ccw { from { transform: translate(-50%,-50%) rotate(0deg);   } to { transform: translate(-50%,-50%) rotate(-360deg); } }
-          @keyframes keep-cw  { from { transform: rotate(0deg);   } to { transform: rotate(-360deg);  } }
-          @keyframes keep-ccw { from { transform: rotate(0deg);   } to { transform: rotate(360deg);   } }
+          @keyframes hero-cw   { from { transform: translate(-50%,-50%) rotate(0deg);   } to { transform: translate(-50%,-50%) rotate(360deg);  } }
+          @keyframes hero-ccw  { from { transform: translate(-50%,-50%) rotate(0deg);   } to { transform: translate(-50%,-50%) rotate(-360deg); } }
+          @keyframes keep-cw   { from { transform: rotate(0deg);   } to { transform: rotate(-360deg);  } }
+          @keyframes keep-ccw  { from { transform: rotate(0deg);   } to { transform: rotate(360deg);   } }
+          @keyframes ticker-dn { from { transform: translateY(0);   } to { transform: translateY(-50%); } }
         `}</style>
+
+        {/* Dikey kayan isimler — dış yörüngenin arka planında */}
+        <div style={{
+          position: 'absolute', top: 0, bottom: 0,
+          left: '50%', transform: 'translateX(-50%)',
+          width: 140, overflow: 'hidden',
+        }}>
+          <div style={{ animation: 'ticker-dn 12s linear infinite' }}>
+            {[1, 2].map((rep) => (
+              <div key={rep}>
+                {['Koro Felix','Felix Kadın','Felix Pop','Felix Yıldız','Felix Çocuk','Felix Mini','Felix Orkestra','Felix Ritim'].map((name) => (
+                  <div key={name} style={{
+                    padding: '10px 0',
+                    textAlign: 'center',
+                    fontSize: 10,
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(245,200,0,0.18)',
+                    fontFamily: 'DM Sans, sans-serif',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {name}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* İç yörünge çemberi */}
         <div className="absolute rounded-full border border-felix/10"
