@@ -1,5 +1,10 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { useRef, useState } from 'react'
+import emailjs from '@emailjs/browser'
+
+// EmailJS başlatma
+emailjs.init('m4Ym6c0C100JWNvrZ')
 
 const instagramHandles = [
   '@korofelix',
@@ -38,6 +43,33 @@ function FadeUp({ children, delay = 0 }) {
 }
 
 export default function Contact() {
+  const formRef = useRef()
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState(null) // 'success', 'error', null
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setStatus(null)
+
+    try {
+      await emailjs.sendForm(
+        'service_48glhoo',
+        'template_p7z1eam',
+        formRef.current
+      )
+      setStatus('success')
+      formRef.current.reset()
+      setTimeout(() => setStatus(null), 5000)
+    } catch (error) {
+      console.error('Email gönderme hatası:', error)
+      setStatus('error')
+      setTimeout(() => setStatus(null), 5000)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <section id="iletisim" className="bg-ink text-chalk py-32 px-8 md:px-24">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 max-w-7xl mx-auto">
@@ -106,14 +138,16 @@ export default function Contact() {
 
         {/* Right — Form */}
         <FadeUp delay={0.2}>
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="text-xs uppercase tracking-widest text-chalk/40 mb-2 block">
                 Adınız Soyadınız
               </label>
               <input
                 type="text"
+                name="from_name"
                 placeholder="Ad Soyad"
+                required
                 className="w-full bg-chalk/5 border border-chalk/10 text-chalk px-4 py-3 placeholder:text-chalk/20 focus:outline-none focus:border-felix transition-colors duration-300"
               />
             </div>
@@ -124,7 +158,9 @@ export default function Contact() {
               </label>
               <input
                 type="email"
+                name="from_email"
                 placeholder="ornek@email.com"
+                required
                 className="w-full bg-chalk/5 border border-chalk/10 text-chalk px-4 py-3 placeholder:text-chalk/20 focus:outline-none focus:border-felix transition-colors duration-300"
               />
             </div>
@@ -134,6 +170,8 @@ export default function Contact() {
                 İlgilendiğiniz Koro
               </label>
               <select
+                name="selected_koro"
+                required
                 className="w-full bg-chalk/5 border border-chalk/10 text-chalk px-4 py-3 focus:outline-none focus:border-felix transition-colors duration-300 appearance-none"
                 defaultValue=""
               >
@@ -149,17 +187,32 @@ export default function Contact() {
                 Mesajınız
               </label>
               <textarea
+                name="message"
                 rows={5}
                 placeholder="Mesajınızı yazınız..."
+                required
                 className="w-full bg-chalk/5 border border-chalk/10 text-chalk px-4 py-3 placeholder:text-chalk/20 focus:outline-none focus:border-felix transition-colors duration-300 resize-none"
               />
             </div>
 
+            {/* Status Messages */}
+            {status === 'success' && (
+              <div className="bg-green-500/20 border border-green-500/50 text-green-400 px-4 py-3 text-sm">
+                ✓ Mesajınız başarıyla gönderildi!
+              </div>
+            )}
+            {status === 'error' && (
+              <div className="bg-red-500/20 border border-red-500/50 text-red-400 px-4 py-3 text-sm">
+                ✗ Mesaj gönderme başarısız. Lütfen tekrar deneyin.
+              </div>
+            )}
+
             <button
               type="submit"
-              className="w-full bg-felix text-ink py-4 font-bold tracking-widest uppercase hover:bg-yellow-300 transition-all duration-300 mt-2"
+              disabled={loading}
+              className="w-full bg-felix text-ink py-4 font-bold tracking-widest uppercase hover:bg-yellow-300 transition-all duration-300 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Mesaj Gönder
+              {loading ? 'Gönderiliyor...' : 'Mesaj Gönder'}
             </button>
           </form>
         </FadeUp>

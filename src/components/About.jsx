@@ -72,7 +72,15 @@ export default function About() {
 
         {/* Right column */}
         <FadeUp delay={0.2}>
-          <div className="font-display text-[9rem] font-bold text-ink/5 leading-none select-none overflow-hidden">
+          <div
+            className="font-display text-[9rem] font-bold leading-none select-none overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, #8B6A00 0%, #B38E00 25%, #F5C800 50%, #FFF4CC 75%, #FFFAEB 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
             FELIX
           </div>
           <div className="mt-4">
